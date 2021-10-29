@@ -262,9 +262,9 @@ return [
             'can' => 'ver-producto',
         ],
         [
-            'text' => 'Almacen',
-            'url'  => '#',
-            'icon' => 'fas fa-fw fas fa-boxes',
+            'text' => 'Categorías',
+            'url'  => 'categories',
+            'icon' => 'fas fa-fw fas fa-list',
         ],
         ['header' => 'CONFIGURACIÓN DE USUARIOS'],
         [

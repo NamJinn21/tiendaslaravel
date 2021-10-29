@@ -5,7 +5,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ImportProducts;
+use App\Http\Controllers\NotificationsController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -34,8 +36,9 @@ Route::group(['middleware' => ['auth']], function(){
     Route::resource('roles',RolController::class);
     Route::resource('usuarios',UsuarioController::class);
     Route::resource('products',ProductsController::class);
-    Route::resource('categories',ProductsController::class);
+    Route::resource('categories',CategoriesController::class);
     Route::resource('importproducts',ImportProducts::class);
 });
-
+Route::get('notifications/get', [NotificationsController::class, 'getNotificationsData']) 
+    ->name('notifications.get');
 

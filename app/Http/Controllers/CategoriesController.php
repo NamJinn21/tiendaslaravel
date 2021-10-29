@@ -21,8 +21,8 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $products = Category::paginate(5);
-        return view('products.index', compact('products'));
+        $categories = Category::paginate(5);
+        return view('categories.index', compact('categories'));
     }
 
     /**
@@ -32,7 +32,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('products.crear');
+        return view('categories.crear');
     }
 
     /**
@@ -45,12 +45,9 @@ class CategoriesController extends Controller
     {
         request()->validate([
             'name' => 'required',
-            'quantity_stock' => 'required',
-            'description' => 'required',
-
         ]);
         Category::create($request->all());
-        return redirect()->route('products.index');
+        return redirect()->route('categories.index');
 
     }
 
@@ -71,9 +68,9 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $product)
+    public function edit(Category $category)
     {
-        return view('products.editar',compact('product'));
+        return view('categories.editar',compact('category'));
     }
 
     /**
@@ -83,15 +80,15 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $product)
+    public function update(Request $request, Category $category)
     {
         request()->validate([
-            'titulo' => 'required',
-            'contenido' => 'required'
+            'name' => 'required',
+            //'description' => 'required'
         ]);
 
-        $product->update($request->all());
-        return redirect()->route('products.index');
+        $category->update($request->all());
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -100,9 +97,9 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $product)
+    public function destroy(Category $category)
     {
-        $product->delete();
-        return redirect()->route('products.index');
+        $category->delete();
+        return redirect()->route('categories.index');
     }
 }

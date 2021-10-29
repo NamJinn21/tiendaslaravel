@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Notifications\ProductsNotification;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {
@@ -22,6 +26,8 @@ class ProductsController extends Controller
      */
     public function index()
     {
+        
+
         $products = Product::paginate(5);
         return view('products.index', compact('products'));
     }
@@ -51,7 +57,13 @@ class ProductsController extends Controller
             'description' => 'required',
 
         ]);
+
+        
         Product::create($request->all());
+        // $date = Carbon::now();
+        // $notifi = Product::whereRaw(' DATEDIFF(due_date, ? ) < ?', [$date, 30])->get();  
+               
+        // Auth::user()->notify(new ProductsNotification($notifi));
         return redirect()->route('products.index');
 
     }

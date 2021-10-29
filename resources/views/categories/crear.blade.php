@@ -28,62 +28,18 @@
                         </div>
                         @endif
 
-                        <form action="{{ route('products.store') }}" method="POST">
+                        <form action="{{ route('categories.store') }}" method="POST">
                             @csrf
                             <div class="row">
-                                <div class="col-xs-6 col-sm-12 col-md-6">
-                                    <div class="form-group">
-                                        <label for="code">Código</label>
-                                        <input type="text" name="code" class="form-control">
-                                    </div>
-                                </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
                                         <label for="name">Nombre</label>
                                         <input type="text" name="name" class="form-control">
                                     </div>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        <label for="quantity_Stock">Cantidad Stock</label>
-                                        <input type="text" name="quantity_Stock" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        <label for="quantity_inventory">Cantidad Inventario</label>
-                                        <input type="text" name="quantity_inventory" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        <label for="due_date">Fecha Vencimiento</label>
-                                        <input type="date" name="due_date" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        <label for="category">Categoria</label>
-                                        <input type="text" name="category" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        <label for="min_supply_quantity">Cantidad Minima Reabastecimiento</label>
-                                        <input type="text" name="min_supply_quantity" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <div class="form-floating">
-                                        <label for="description">Descripción</label>
-                                        <textarea class="form-control" name="description"
-                                            style="height: 100px"></textarea>
-                                    </div>
                                     <br>
                                     <button type="submit" class="btn btn-primary">Guardar</button>
-                                </div>
+                                </div>                                                        
                         </form>
-
                     </div>
                 </div>
             </div>

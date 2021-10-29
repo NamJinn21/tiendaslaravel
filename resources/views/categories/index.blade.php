@@ -4,7 +4,7 @@
 
 @section('content_header')
 <div class="section-header">
-    <h3 class="page__heading">Productos</h3>
+    <h3 class="page__heading">Categorías</h3>
 </div>
 @stop
 
@@ -18,46 +18,32 @@
 
 
                         @can('crear-producto')
-                        <a class="btn btn-warning" href="{{ route('products.create') }}">Nuevo</a>
+                        <a class="btn btn-warning" href="{{ route('categories.create') }}">Nuevo</a>
                         @endcan
 
                         <table class="table table-striped mt-2">
                             <thead style="background-color:#6777ef">
                                 <th style="display: none;">ID</th>
-                                <th style="color:#fff;">Código</th>
                                 <th style="color:#fff;">Nombre</th>
-                                <th style="color:#fff;">Descripción</th>
-                                <th style="color:#fff;">Categoría</th>
-                                <th style="color:#fff;">Cantidad Stock</th>
-                                <th style="color:#fff;">Cantidad Inventario</th>
-                                <th style="color:#fff;">Fecha de vencimiento</th>
-                                <th style="color:#fff;">Cantidad minima de reabastecimiento</th>
                                 <th style="color:#fff;">Acciones</th>
                             </thead>
                             <tbody>
-                                @foreach ($products as $product)
+                                @foreach ($categories as $category)
                                 <tr>
-                                    <td style="display: none;">{{ $product->id }}</td>
-                                    <td>{{ $product->code }}</td>
-                                    <td>{{ $product->name }}</td>
-                                    <td>{{ $product->description }}</td>
-                                    <td>{{ $product->category }}</td>
-                                    <td>{{ $product->quantity_stock }}</td>
-                                    <td>{{ $product->quantity_inventory }}</td>
-                                    <td>{{ $product->due_date }}</td>
-                                    <td>{{ $product->min_supply_quantity }}</td>
+                                    <td style="display: none;">{{ $category->id }}</td>
+                                    <td>{{ $category->name }}</td>
                                     <td>
-                                        <form action="{{ route('products.destroy',$product->id) }}" method="POST">
+                                        <form class="formEliminar"
+                                            action="{{ route('categories.destroy',$category->id) }}" method="POST">
                                             @can('editar-producto')
-                                            <a href="{{ route('products.edit',$product->id) }}"><i
-                                                    class="fas fa-edit fa-2x"
-                                                    href="{{ route('products.edit',$product->id) }}"></i></a>
+                                            <a class="btn btn-info"
+                                                href="{{ route('categories.edit',$category->id) }}">Editar <i class="fas fa-edit"></i></a>
                                             @endcan
 
                                             @csrf
                                             @method('DELETE')
                                             @can('borrar-producto')
-                                            <button type="submit"> <i class="fas fa-trash-alt fa-2x"></i></button>
+                                            <button type="submit" class="btn btn-danger">Borrar <i class="fas fa-trash-alt "></i></button>
                                             @endcan
                                         </form>
                                     </td>
@@ -68,7 +54,7 @@
 
                         <!-- Ubicamos la paginacion a la derecha -->
                         <div class="pagination justify-content-end">
-                            {!! $products->links() !!}
+                            {!! $categories->links() !!}
                         </div>
                         </table>
                     </div>
@@ -84,5 +70,32 @@
 @stop
 
 @section('js')
-
+<script>
+    (function () {
+  'use strict'
+  //debemos crear la clase formEliminar dentro del form del boton borrar
+  //recordar que cada registro a eliminar esta contenido en un form  
+  var forms = document.querySelectorAll('.formEliminar')
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {        
+          event.preventDefault()
+          event.stopPropagation()        
+          Swal.fire({
+                title: '¿Confirma la eliminación del Producto?',        
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#20c997',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Confirmar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                    Swal.fire('¡Eliminado!', 'El Rol ha sido eliminado exitosamente.','success');
+                }
+            })                      
+      }, false)
+    })
+})()
+</script>
 @stop
