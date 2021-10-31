@@ -22,11 +22,12 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
+        $produxcatego = Product::selectRaw('products.category, categories.id, categories.name, COUNT(products.category) AS countproxcate')->leftjoin('categories','products.category','=','categories.id')->groupby('products.category')->get();
         $categories = Category::all();
         $products = Product::all();
         $user = User::all();
-        return view('dash.index', compact('categories','products','user'));
+        return view('dash.index', compact('categories','products','user','produxcatego'));
     }
 
     /**

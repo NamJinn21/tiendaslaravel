@@ -74,7 +74,7 @@
                 </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-6 col-6">
+            <div class="col-lg-6 col-12">
                 <!-- small box -->
                 <div class="small-box bg-white">
                     <div class="chart-container" style="height: 25vw">
@@ -82,7 +82,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-6">
+            <div class="col-lg-6 col-12">
                 <!-- small box -->
                 <div class="small-box bg-white">
                     <div class="chart-container" style="height: 25vw">
@@ -117,50 +117,6 @@
     taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas ornare velit nec nulla
     ornare molestie. Etiam aliquet, sem ac elementum suscipit, leo velit pulvinar sem, vitae vehicula nisi urna ac enim.
 </p>
-<!-- Map card -->
-<div class="card bg-gradient-primary">
-    <div class="card-header border-0">
-        <h3 class="card-title">
-            <i class="fas fa-map-marker-alt mr-1"></i>
-            Visitors
-        </h3>
-        <!-- card tools -->
-        <div class="card-tools">
-            <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
-                <i class="far fa-calendar-alt"></i>
-            </button>
-            <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse">
-                <i class="fas fa-minus"></i>
-            </button>
-        </div>
-        <!-- /.card-tools -->
-    </div>
-    <div class="card-body">
-        <div id="world-map" style="height: 250px; width: 100%;"></div>
-    </div>
-    <!-- /.card-body-->
-    <div class="card-footer bg-transparent">
-        <div class="row">
-            <div class="col-4 text-center">
-                <div id="sparkline-1"></div>
-                <div class="text-white">Visitors</div>
-            </div>
-            <!-- ./col -->
-            <div class="col-4 text-center">
-                <div id="sparkline-2"></div>
-                <div class="text-white">Online</div>
-            </div>
-            <!-- ./col -->
-            <div class="col-4 text-center">
-                <div id="sparkline-3"></div>
-                <div class="text-white">Sales</div>
-            </div>
-            <!-- ./col -->
-        </div>
-        <!-- /.row -->
-    </div>
-</div>
-<!-- /.card -->
 @stop
 
 @section('plugins.Chartjs', true)
@@ -174,20 +130,31 @@
 @section('js')
 
 <script>
+    //pull de colores background
+    const background = ['rgb(220, 53, 69)',
+                    'rgb(23, 162, 184)',
+                    'rgb(255, 193, 7)',
+                    'rgb(40, 167, 69)',
+                    'rgb(153, 102, 255)',
+                    'rgb(255, 159, 64)'];
+    //valores donut
+    var xValues =  [
+            @foreach ($produxcatego as $proxcat2)
+                ["{{ $proxcat2->name }}"],
+            @endforeach
+            ];
+    var yValues =  [
+            @foreach ($produxcatego as $proxcat)
+                ["{{ $proxcat->countproxcate }}"],
+            @endforeach
+            ];
     //data donut chart
     const data = {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: xValues,
             datasets: [{
                 label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgb(220, 53, 69)',
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 206, 86)',
-                    'rgb(75, 192, 192)',
-                    'rgb(153, 102, 255)',
-                    'rgb(255, 159, 64)'
-                ],
+                data: yValues,
+                backgroundColor: background,
               
                 borderWidth: 1,
             }],
@@ -204,7 +171,7 @@
     //renderizando donut chart
     const myChart = new Chart(document.getElementById('myChart'), config);
 
-    //config donut chart
+    //config bar chart
     const config2 = {
         type: 'bar',
         data,
