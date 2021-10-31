@@ -4,7 +4,7 @@
 
 @section('content_header')
 <div class="section-header">
-    <h3 class="page__heading">Categorías</h3>
+    <h1 class="page__heading">Categorías</h1>
 </div>
 @stop
 
@@ -33,19 +33,25 @@
                                     <td style="display: none;">{{ $category->id }}</td>
                                     <td>{{ $category->name }}</td>
                                     <td>
+                                        @if ($category->id == 4)
+                                        <p>Sin acciones</p>
+                                        @else
                                         <form class="formEliminar"
                                             action="{{ route('categories.destroy',$category->id) }}" method="POST">
                                             @can('editar-producto')
                                             <a class="btn btn-info"
-                                                href="{{ route('categories.edit',$category->id) }}">Editar <i class="fas fa-edit"></i></a>
+                                                href="{{ route('categories.edit',$category->id) }}">Editar <i
+                                                    class="fas fa-edit"></i></a>
                                             @endcan
 
                                             @csrf
                                             @method('DELETE')
                                             @can('borrar-producto')
-                                            <button type="submit" class="btn btn-danger">Borrar <i class="fas fa-trash-alt "></i></button>
+                                            <button type="submit" class="btn btn-danger">Borrar <i
+                                                    class="fas fa-trash-alt "></i></button>
                                             @endcan
                                         </form>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

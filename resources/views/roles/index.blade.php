@@ -3,14 +3,13 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+<div class="section-header">
+    <h1 class="page__heading">Roles</h1>
+</div>
 @stop
 
 @section('content')
      <section class="section">
-        <div class="section-header">
-            <h3 class="page__heading">Roless</h3>
-        </div>
         <div class="section-body">
             <div class="row">
                 <div class="div col-lg-12">

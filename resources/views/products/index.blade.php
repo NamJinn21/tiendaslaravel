@@ -4,7 +4,7 @@
 
 @section('content_header')
 <div class="section-header">
-    <h3 class="page__heading">Productos</h3>
+    <h1 class="page__heading">Productos</h1>
 </div>
 @stop
 
@@ -38,13 +38,14 @@
                             </thead>
                             <tbody>
                                 @foreach ($products as $product)
+                                
                                 <tr>
                                     <td style="display: none;">{{ $product->id }}</td>
                                     <td>{{ $product->code }}</td>
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->description }}</td>
                                     <td style="display: none;">{{ $product->id_user }}</td>
-                                    <td>{{ $product->category }}</td>
+                                    <td>{{ $product->joincategory }}</td>
                                     <td>{{ $product->quantity_stock }}</td>
                                     <td>{{ $product->quantity_inventory }}</td>
                                     <td>{{ $product->due_date }}</td>
@@ -70,9 +71,7 @@
                         </table>
 
                         <!-- Ubicamos la paginacion a la derecha -->
-                        <div class="pagination justify-content-end">
-                            {!! $products->links() !!}
-                        </div>
+                        
                         </table>
                     </div>
                 </div>

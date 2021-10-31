@@ -13,7 +13,6 @@
             <div class="div col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h3>Listado</h3>
                         @can('crear-usuario')
                         <a href="{{ route('usuarios.create')}}" class="btn btn-warning">Nuevo</a>
                         @endcan

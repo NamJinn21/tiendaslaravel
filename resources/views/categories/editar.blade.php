@@ -37,7 +37,7 @@
                                     <div class="form-group">
                                         <label for="name">Nombre</label>
                                         <input type="text" name="name" class="form-control"
-                                            value="{{ $category->name }}">
+                                            value="{{ $category->name }}" required>
                                     </div>
                                     <br>
                                     <button type="submit" class="btn btn-primary">Guardar</button>

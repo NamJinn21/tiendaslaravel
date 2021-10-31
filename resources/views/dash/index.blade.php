@@ -15,14 +15,15 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>150</h3>
+                        <h3>{{$products->count();}}</h3>
 
-                        <p>New Orders</p>
+                        <p>Productos</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-bag"></i>
+                        <i class="fas fa-fw fa-shopping-basket"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{url('products')}}" class="small-box-footer">Más información <i
+                            class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -30,14 +31,15 @@
                 <!-- small box -->
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>53<sup style="font-size: 20px">%</sup></h3>
+                        <h3>{{$categories->count()-1;}}</h3>
 
-                        <p>Bounce Rate</p>
+                        <p>Categorías</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
+                        <i class="fas fa-fw fas fa-list"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{url('categories')}}" class="small-box-footer">Más información <i
+                            class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -45,14 +47,15 @@
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>44</h3>
+                        <h3>{{$user->count();}}</h3>
 
-                        <p>User Registrations</p>
+                        <p>Usuarios</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-person-add"></i>
+                        <i class="fas fa-fw fa-users"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{url('usuarios')}}" class="small-box-footer">Más información <i
+                            class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -65,9 +68,26 @@
                         <p>Unique Visitors</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
+                        <i class="fas fa-fw fa-users"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-6 col-6">
+                <!-- small box -->
+                <div class="small-box bg-white">
+                    <div class="chart-container" style="height: 25vw">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-6">
+                <!-- small box -->
+                <div class="small-box bg-white">
+                    <div class="chart-container" style="height: 25vw">
+                        <canvas id="BarChart"></canvas>
+                    </div>
                 </div>
             </div>
             <!-- ./col -->
@@ -97,9 +117,55 @@
     taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas ornare velit nec nulla
     ornare molestie. Etiam aliquet, sem ac elementum suscipit, leo velit pulvinar sem, vitae vehicula nisi urna ac enim.
 </p>
-
-
+<!-- Map card -->
+<div class="card bg-gradient-primary">
+    <div class="card-header border-0">
+        <h3 class="card-title">
+            <i class="fas fa-map-marker-alt mr-1"></i>
+            Visitors
+        </h3>
+        <!-- card tools -->
+        <div class="card-tools">
+            <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
+                <i class="far fa-calendar-alt"></i>
+            </button>
+            <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+        <!-- /.card-tools -->
+    </div>
+    <div class="card-body">
+        <div id="world-map" style="height: 250px; width: 100%;"></div>
+    </div>
+    <!-- /.card-body-->
+    <div class="card-footer bg-transparent">
+        <div class="row">
+            <div class="col-4 text-center">
+                <div id="sparkline-1"></div>
+                <div class="text-white">Visitors</div>
+            </div>
+            <!-- ./col -->
+            <div class="col-4 text-center">
+                <div id="sparkline-2"></div>
+                <div class="text-white">Online</div>
+            </div>
+            <!-- ./col -->
+            <div class="col-4 text-center">
+                <div id="sparkline-3"></div>
+                <div class="text-white">Sales</div>
+            </div>
+            <!-- ./col -->
+        </div>
+        <!-- /.row -->
+    </div>
+</div>
+<!-- /.card -->
 @stop
+
+@section('plugins.Chartjs', true)
+
+
 
 @section('css')
 
@@ -107,4 +173,78 @@
 
 @section('js')
 
+<script>
+    //data donut chart
+    const data = {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgb(220, 53, 69)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 206, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(153, 102, 255)',
+                    'rgb(255, 159, 64)'
+                ],
+              
+                borderWidth: 1,
+            }],
+    };
+    //config donut chart
+    const config = {
+        type: 'doughnut',
+        data,
+        options:{
+            responsive:true,
+            maintainAspectRatio: false
+        }
+    };
+    //renderizando donut chart
+    const myChart = new Chart(document.getElementById('myChart'), config);
+
+    //config donut chart
+    const config2 = {
+        type: 'bar',
+        data,
+        options: {
+            responsive:true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    };
+    //renderizando bar chart
+    const BarChart = new Chart(document.getElementById('BarChart'), config2);
+    
+</script>
+
+
+<script>
+    const ctx = document.getElementById('myChart');
+    const myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgb(220, 53, 69)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 206, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(153, 102, 255)',
+                    'rgb(255, 159, 64)'
+                ],
+              
+                borderWidth: 1,
+            }],
+        },
+    });
+</script>
 @stop

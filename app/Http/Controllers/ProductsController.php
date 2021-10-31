@@ -26,9 +26,9 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        
+ 
 
-        $products = Product::paginate(5);
+        $products = Product::SelectRaw('products.*, (categories.name) AS joincategory ')->join('categories','products.category',"=",'categories.id')->get();
         return view('products.index', compact('products'));
     }
 
@@ -39,7 +39,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        $categories = Category::select('name')->get();
+        $categories = Category::select('id', 'name')->get();
         return view('products.crear',compact('categories'));
     }
 
@@ -87,7 +87,7 @@ class ProductsController extends Controller
      */
     public function edit(Product $product)
     {
-        $categories = Category::select('name')->get();
+        $categories = Category::all();
         return view('products.editar',compact('product','categories'));
     }
 
@@ -104,6 +104,7 @@ class ProductsController extends Controller
             'name' => 'required',
             'quantity_stock' => 'required',
             'description' => 'required',
+            'category' => 'required',
         ]);
 
         $product->update($request->all());

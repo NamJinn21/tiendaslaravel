@@ -7,6 +7,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ImportProducts;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotificationsController;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,10 +28,8 @@ Route::get('/', function () {
     }
     return view('auth.login');
 });
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/dash', function () {
-    return view('dash.index');
-})->name('dash');
+Route::get('dash', [DashboardController::class, 'index']) 
+    ->name('dash');
 
 Route::group(['middleware' => ['auth']], function(){
     Route::resource('roles',RolController::class);
