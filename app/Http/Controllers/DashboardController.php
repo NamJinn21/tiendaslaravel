@@ -6,15 +6,22 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
+use Carbon\Carbon;
+use App\Notifications\ProductsNotification;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Notifications\Notifiable;
 
 class DashboardController extends Controller
 {
+
+    use Notifiable;
     function __construct()
     {
-        $this->middleware('permission:ver-producto|crear-producto|editar-producto|borrar-producto',['only'=>['index']]);
-        $this->middleware('permission:crear-producto', ['only'=>['create','store']]);
-        $this->middleware('permission:editar-producto', ['only'=>['edit','update']]);
-        $this->middleware('permission:borrar-producto', ['only'=>['destroy']]);
+        $this->middleware('permission:ver-producto|crear-producto|editar-producto|borrar-producto', ['only' => ['index']]);
+        $this->middleware('permission:crear-producto', ['only' => ['create', 'store']]);
+        $this->middleware('permission:editar-producto', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:borrar-producto', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -22,12 +29,13 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-        $produxcatego = Product::selectRaw('products.category, categories.id, categories.name, COUNT(products.category) AS countproxcate')->leftjoin('categories','products.category','=','categories.id')->groupby('products.category')->get();
+    {
+
+        $produxcatego = Product::selectRaw('products.category, categories.id, categories.name, COUNT(products.category) AS countproxcate')->leftjoin('categories', 'products.category', '=', 'categories.id')->groupby('products.category')->get();
         $categories = Category::all();
         $products = Product::all();
         $user = User::all();
-        return view('dash.index', compact('categories','products','user','produxcatego'));
+        return view('dash.index', compact('categories', 'products', 'user', 'produxcatego'));
     }
 
     /**
@@ -53,7 +61,6 @@ class DashboardController extends Controller
         ]);
         Category::create($request->all());
         return redirect()->route('categories.index');
-
     }
 
     /**
@@ -75,7 +82,7 @@ class DashboardController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('categories.editar',compact('category'));
+        return view('categories.editar', compact('category'));
     }
 
     /**

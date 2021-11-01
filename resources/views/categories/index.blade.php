@@ -7,7 +7,7 @@
     <h1 class="page__heading">Categorías</h1>
 </div>
 @stop
-
+@section('plugins.Datatables', true)
 @section('content')
 <section class="section">
     <div class="section-body">
@@ -18,10 +18,10 @@
 
 
                         @can('crear-producto')
-                        <a class="btn btn-warning" href="{{ route('categories.create') }}">Nuevo</a>
+                        <a style="margin:0px 0px 10px 0px" class="btn btn-warning" href="{{ route('categories.create') }}">Nuevo</a>
                         @endcan
 
-                        <table class="table table-striped mt-2">
+                        <table id="categorias" class="table table-striped mt-2">
                             <thead style="background-color:#6777ef">
                                 <th style="display: none;">ID</th>
                                 <th style="color:#fff;">Nombre</th>
@@ -76,6 +76,13 @@
 @stop
 
 @section('js')
+
+<script>
+    $(document).ready(function(){
+        $('#categorias').DataTable();
+    });
+</script>
+
 <script>
     (function () {
   'use strict'

@@ -7,7 +7,7 @@
     <h1 class="page__heading">Productos</h1>
 </div>
 @stop
-
+@section('plugins.Datatables', true)
 @section('content')
 <section class="section">
     <div class="section-body">
@@ -18,11 +18,11 @@
 
 
                         @can('crear-producto')
-                        <a class="btn btn-warning" href="{{ route('products.create') }}">Nuevo</a>
-                        <a style="margin:0px 10px" class="btn btn-success" href="{{ url('importproducts') }}">Cargue Masivo</a>
+                        <a style="margin:0px 0px 10px 0px" class="btn btn-warning" href="{{ route('products.create') }}">Nuevo</a>
+                        <a style="margin:0px 0px 10px 10px" class="btn btn-success" href="{{ url('importproducts') }}">Cargue Masivo</a>
                         @endcan
 
-                        <table class="table table-striped mt-2">
+                        <table id="productos" class="table table-striped mt-2">
                             <thead style="background-color:#6777ef">
                                 <th style="display: none;">ID</th>
                                 <th style="color:#fff;">Código</th>
@@ -86,6 +86,13 @@
 @stop
 
 @section('js')
+
+<script>
+    $(document).ready(function(){
+        $('#productos').DataTable();
+    });
+</script>
+
 <script>
     (function () {
   'use strict'

@@ -7,7 +7,7 @@
     <h1 class="page__heading">Roles</h1>
 </div>
 @stop
-
+@section('plugins.Datatables', true)
 @section('content')
      <section class="section">
         <div class="section-body">
@@ -17,11 +17,11 @@
                         <div class="card-body">
                             
                             @can('crear-rol')
-                                <a class="btn btn-warning" href="{{ route('roles.create')}}">Nuevo</a>
+                                <a style="margin:0px 0px 10px 0px" class="btn btn-warning" href="{{ route('roles.create')}}">Nuevo</a>
                             @endcan
 
                             
-                            <table class="table table-striped mt-2">
+                            <table id="roles" class="table table-striped mt-2">
                                 <thead style="background-color: #6777ef">
                                     <th style="color: #fff;">Rol</th>
                                     <th style="color: #fff;">Acciones</th>
@@ -64,6 +64,13 @@
 @stop
 
 @section('js')
+
+<script>
+    $(document).ready(function(){
+        $('#roles').DataTable();
+    });
+</script>
+
 <script>
     (function () {
   'use strict'

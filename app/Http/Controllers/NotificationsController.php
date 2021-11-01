@@ -6,73 +6,83 @@ use Illuminate\Notifications\Notifiable;
 use App\Notifications\InvoicePaid;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Product;
+use App\Models\User;
+use App\Models\Notifications;
 use Carbon\Carbon;
+use App\Models\History;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use App\Notifications\ProductsNotification;
 
 class NotificationsController extends Controller
 {
     use  Notifiable;
+    public function index()
+    {
 
+        $noleidas = auth()->user()->unreadNotifications;
+        $leidas = auth()->user()->readNotifications;
+        return view('notifications.index', compact('noleidas', 'leidas'));
+    }
     public function getNotificationsData(Request $request)
-{
-    // For the sake of simplicity, assume we have a variable called
-    // $notifications with the unread notifications. Each notification
-    // have the next properties:
-    // icon: An icon for the notification.
-    // text: A text for the notification.
-    // time: The time since notification was created on the server.
-    // At next, we define a hardcoded variable with the explained format,
-    // but you can assume this data comes from a database query.
+    {
+
+        $date = now()->addDays(30);
+        $users = User::all();
+        Product::select('products.*', 'notifications.data->id AS jsonidproduct')
+            ->leftJoin('notifications', 'products.id', '=', 'notifications.data->id')
+            ->whereNull('notifications.data->id')
+            ->where('products.due_date', '<', $date)
+            ->orderBy('products.id')
+            ->get()->each(function ($product) use ($users) {
+                Notification::send($users, new ProductsNotification($product));
+            });
+
+        // Product::where('due_date', '<', $date)->get()->each(function ($product) use ($users) {
+        //     Notification::send($users, new ProductsNotification($product));
+        // });
 
 
-    
-    $notifications = [
-        [
-            'icon' => 'fas fa-fw fa-envelope',
-            'text' => rand(0, 10) . ' new messages',
-            'time' => rand(0, 10) . ' minutes',
-        ],
-        [
-            'icon' => 'fas fa-fw fa-users text-primary',
-            'text' => rand(0, 10) . ' friend requests',
-            'time' => rand(0, 60) . ' minutes',
-        ],
-        [
-            'icon' => 'fas fa-fw fa-file text-danger',
-            'text' => rand(0, 10) . ' new reports',
-            'time' => rand(0, 60) . ' minutes',
-        ],
-    ];
 
-    // Now, we create the notification dropdown main content.
+        //Insertando los datos en el contenido principal.
 
-    $dropdownHtml = '';
+        $dropdownHtml = '';
+        $iconojo =   "<span class='float-right text-muted text-sm'> <i class='mr-2 fas fa-fw fa-eye'></i> </span>";
+        $dropdownHtml .=  "<a href='{route('viewnotification')}' class='dropdown-item'> {$iconojo} Marcar todo como leído </a>";
 
-    foreach ($notifications as $key => $not) {
-        $icon = "<i class='mr-2 {$not['icon']}'></i>";
+        foreach (auth()->user()->unreadNotifications as $key => $not) {
+            $icon = "<i style='color: Tomato;'class='mr-2 fas fa-fw fa-exclamation'></i>";
 
-        $time = "<span class='float-right text-muted text-sm'>
-                   {$not['time']}
+            $time = "<span class='float-right text-muted text-sm'>
+                   {$not->created_at->diffForHumans()}
                  </span>";
 
-        $dropdownHtml .= "<a href='#' class='dropdown-item'>
-                            {$icon}{$not['text']}{$time}
+            $dropdownHtml .= "<a href='#' class='dropdown-item'>
+                            {$icon}{$not->data['name']}{$time}
                           </a>";
 
-        if ($key < count($notifications) - 1) {
-            $dropdownHtml .= "<div class='dropdown-divider'></div>";
+            if ($key < count(auth()->user()->unreadNotifications) - 1) {
+                $dropdownHtml .= "<div class='dropdown-divider'></div>";
+            }
         }
+
+        // return a al contenido principal y al icono con las notificaciones.
+
+        return [
+            'label'       => count(auth()->user()->unreadNotifications),
+            'label_color' => 'danger',
+            'icon_color'  => 'dark',
+            'dropdown'    => $dropdownHtml,
+        ];
     }
 
-    // Return the new notification data.
-
-    return [
-        'label'       => count($notifications),
-        'label_color' => 'danger',
-        'icon_color'  => 'dark',
-        'dropdown'    => $dropdownHtml,
-    ];
-}
+    public function markNotification(Request $request)
+    {
+       
+        auth()->user()->unreadNotifications->when($request->input('id'), function ($query) use ($request) {
+            return $query->where('id', $request->input('id'));
+        })->markAsRead();
+        return redirect()->back();
+    }
 }

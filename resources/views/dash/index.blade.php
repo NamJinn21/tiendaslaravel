@@ -155,7 +155,7 @@
                 label: '# of Votes',
                 data: yValues,
                 backgroundColor: background,
-              
+                hoverOffset: 4,
                 borderWidth: 1,
             }],
     };

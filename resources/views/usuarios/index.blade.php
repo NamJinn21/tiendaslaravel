@@ -5,19 +5,19 @@
 @section('content_header')
 <h1>Usuarios</h1>
 @stop
-
-@section('content')<section class="section">
-
+@section('plugins.Datatables', true)
+@section('content')
+<section class="section">
     <div class="section-body">
         <div class="row">
             <div class="div col-lg-12">
                 <div class="card">
                     <div class="card-body">
                         @can('crear-usuario')
-                        <a href="{{ route('usuarios.create')}}" class="btn btn-warning">Nuevo</a>
+                        <a style="margin:0px 0px 10px 0px" href="{{ route('usuarios.create')}}" class="btn btn-warning">Nuevo</a>
                         @endcan
 
-                        <table class="table table-striped mt-2">
+                        <table id="usuarios"class="table table-striped mt-2">
                             <thead style="background-color: #6777ef">
                                 <th style="display: none;">ID</th>
                                 <th style="color: #fff;">Nombre</th>
@@ -72,6 +72,13 @@
 @stop
 
 @section('js')
+
+<script>
+    $(document).ready(function(){
+        $('#usuarios').DataTable();
+    });
+</script>
+
 <script>
     (function () {
   'use strict'

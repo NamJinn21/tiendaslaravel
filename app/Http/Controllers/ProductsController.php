@@ -60,10 +60,6 @@ class ProductsController extends Controller
 
         
         Product::create($request->all());
-        // $date = Carbon::now();
-        // $notifi = Product::whereRaw(' DATEDIFF(due_date, ? ) < ?', [$date, 30])->get();  
-               
-        // Auth::user()->notify(new ProductsNotification($notifi));
         return redirect()->route('products.index');
 
     }

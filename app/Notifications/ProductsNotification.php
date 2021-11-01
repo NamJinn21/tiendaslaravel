@@ -58,9 +58,11 @@ class ProductsNotification extends Notification
     public function toArray($notifiable)
     {
         return [
+            'id' => $this->product->id,
             'code' => $this->product->code,
             'name' => $this->product->name,
             'due_date' => $this->product->due_date,
+            'days' => "30",
             'description' => $this->product->description
 
         ];

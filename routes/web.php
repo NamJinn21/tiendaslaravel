@@ -23,21 +23,30 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    if (Auth::check()){
+    if (Auth::check()) {
         return redirect('/dash');
     }
     return view('auth.login');
 });
-Route::get('dash', [DashboardController::class, 'index']) 
+Route::get('dash', [DashboardController::class, 'index'])
     ->name('dash');
 
-Route::group(['middleware' => ['auth']], function(){
-    Route::resource('roles',RolController::class);
-    Route::resource('usuarios',UsuarioController::class);
-    Route::resource('products',ProductsController::class);
-    Route::resource('categories',CategoriesController::class);
-    Route::resource('importproducts',ImportProducts::class);
-});
-Route::get('notifications/get', [NotificationsController::class, 'getNotificationsData']) 
-    ->name('notifications.get');
+Route::get('markAsRead', function(){
+    auth()->user()->unreadNotifications->markAsRead();
+    return redirect()->back();
+})->name('markAsRead');
 
+Route::post('markead', [NotificationsController::class, 'markNotification'])->name('markRead');
+
+Route::get('notifications/show', [NotificationsController::class, 'index'])
+    ->name('notification');
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('roles', RolController::class);
+    Route::resource('usuarios', UsuarioController::class);
+    Route::resource('products', ProductsController::class);
+    Route::resource('categories', CategoriesController::class);
+    Route::resource('importproducts', ImportProducts::class);
+});
+
+Route::get('notifications/get', [NotificationsController::class, 'getNotificationsData'])
+    ->name('notifications.get');
