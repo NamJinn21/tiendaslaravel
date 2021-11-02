@@ -62,6 +62,7 @@ class ProductsNotification extends Notification
             'code' => $this->product->code,
             'name' => $this->product->name,
             'due_date' => $this->product->due_date,
+            'type' => $this->product->type,
             'days' => "30",
             'description' => $this->product->description
 

@@ -11,6 +11,7 @@ use App\Notifications\ProductsNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -30,7 +31,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-
+       
         $produxcatego = Product::selectRaw('products.category, categories.id, categories.name, COUNT(products.category) AS countproxcate')->leftjoin('categories', 'products.category', '=', 'categories.id')->groupby('products.category')->get();
         $categories = Category::all();
         $products = Product::all();

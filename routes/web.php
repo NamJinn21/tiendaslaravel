@@ -21,25 +21,30 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//validando auth
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect('/dash');
     }
     return view('auth.login');
 });
+//controlador del dash
 Route::get('dash', [DashboardController::class, 'index'])
     ->name('dash');
 
+//marcar todas las notificaciones como leídas directamente
 Route::get('markAsRead', function(){
     auth()->user()->unreadNotifications->markAsRead();
     return redirect()->back();
 })->name('markAsRead');
-
+//controlador de notificaciones
 Route::post('markead', [NotificationsController::class, 'markNotification'])->name('markRead');
-
+Route::get('notifications/get', [NotificationsController::class, 'getNotificationsData'])
+    ->name('notifications.get');
 Route::get('notifications/show', [NotificationsController::class, 'index'])
     ->name('notification');
+
+//grupo de rutas principales
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('roles', RolController::class);
     Route::resource('usuarios', UsuarioController::class);
@@ -48,5 +53,3 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('importproducts', ImportProducts::class);
 });
 
-Route::get('notifications/get', [NotificationsController::class, 'getNotificationsData'])
-    ->name('notifications.get');

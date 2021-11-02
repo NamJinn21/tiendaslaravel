@@ -46,13 +46,13 @@
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
                                         <label for="quantity_Stock">Cantidad Stock</label>
-                                        <input type="text" name="quantity_stock" class="form-control" required>
+                                        <input type="number" name="quantity_stock" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
                                         <label for="quantity_inventory">Cantidad Inventario</label>
-                                        <input type="text" name="quantity_inventory" class="form-control">
+                                        <input type="number" name="quantity_inventory" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6">
@@ -74,7 +74,7 @@
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
                                         <label for="min_supply_quantity">Cantidad Minima Reabastecimiento</label>
-                                        <input type="text" name="min_supply_quantity" class="form-control">
+                                        <input type="number" name="min_supply_quantity" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">
