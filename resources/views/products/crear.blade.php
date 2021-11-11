@@ -57,8 +57,19 @@
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
-                                        <label for="due_date">Fecha Vencimiento</label>
-                                        <input type="date" name="due_date" class="form-control">
+                                        <label for="min_supply_quantity">Cantidad Minima Reabastecimiento</label>
+                                        <input type="number" name="min_supply_quantity" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <label for="importance">Importancia</label>
+                                        <select name="importance" class="form-control" required>
+                                            <option value="">Seleccione...</option>
+                                            <option value="Muy Importante">Muy Importante</option>
+                                            <option value="Medianamente Importante">Medianamente Importante</option>
+                                            <option value="Poco Importante">Poco Importante</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6">
@@ -66,22 +77,22 @@
                                         <label for="category">Categoria</label>
                                         <select name="category" class="form-control">
                                             @foreach ($categories as $category )
-                                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
-                                        <label for="min_supply_quantity">Cantidad Minima Reabastecimiento</label>
-                                        <input type="number" name="min_supply_quantity" class="form-control">
+                                        <label for="due_date">Fecha Vencimiento</label>
+                                        <input type="date" name="due_date" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-floating">
                                         <label for="description">Descripción</label>
-                                        <textarea class="form-control" name="description"
-                                            style="height: 100px" required></textarea>
+                                        <textarea class="form-control" name="description" style="height: 100px"
+                                            required></textarea>
                                     </div>
                                     <br>
                                     <button type="submit" class="btn btn-primary">Guardar</button>

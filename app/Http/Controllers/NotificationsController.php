@@ -31,8 +31,12 @@ class NotificationsController extends Controller
         $users = User::all();
 
         //consultando la cantidad de productos stock+inventario y comparando con el valor minimo de reabastecimiento para crear notificacion
-        Product::select('products.*','notifications.data->id AS jsonidproduct')->leftJoin('notifications', 'products.id', '=', 'notifications.data->id')
-        ->whereNull('notifications.data->id')->whereRaw('quantity_stock  + quantity_inventory <= min_supply_quantity')->addSelect(DB::raw("'stock' as type"))->get()->each(function ($product) use ($users) {
+        Product::select('products.*','notifications.data->id','notifications.data->type')
+        ->leftJoin('notifications', 'products.id', '=', 'notifications.data->id')
+        ->whereNull('notifications.data->id')
+        ->whereRaw('quantity_stock  + quantity_inventory <= min_supply_quantity')
+        ->addSelect(DB::raw("'stock' as type"))
+        ->get()->each(function ($product) use ($users) {
             Notification::send($users, new ProductsNotification($product));
         });
 

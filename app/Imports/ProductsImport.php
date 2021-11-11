@@ -4,35 +4,41 @@ namespace App\Imports;
 
 use App\Models\Product;
 use App\Models\Category;
-use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Facades\Auth;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
-class ProductsImport implements ToModel
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
+
+class ProductsImport implements ToCollection
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
-    public function model(array $row)
+     * @param Collection $collection
+     */
+    public function collection(Collection $collection)
     {
-        
-        $categories = Category::all();
-        foreach($categories as $cate){
-            if($row[5] == $cate->name){
-                $rowconvert = $cate->id;
+
+        foreach ($collection as $row) {
+            $categories = Category::all();
+            foreach ($categories as $cate) {
+                if ($row[5] === $cate->name) {
+                    $rowconvert = $cate->id;
+                }
             }
+            Product::updateOrCreate(
+                [
+                    'code' => $row[0],
+                    'name' => $row[1]
+                ],
+                [
+                    'quantity_stock' => $row[2],
+                    'quantity_inventory' => $row[3],
+                    'due_date' => $row[4],
+                    'category' => $rowconvert,
+                    'importance' => $row[6],
+                    'description' => $row[7],
+                    'id_user' => Auth::id(),
+                    'min_supply_quantity' => $row[8],
+                ]
+            );
         }
-        return new Product([
-            'code' => $row[0],
-            'name' => $row[1],
-            'quantity_stock' => $row[2],
-            'quantity_inventory' => $row[3],
-            'due_date' => $row[4],
-            'category' => $rowconvert,
-            'description' => $row[6],
-            'id_user'=> Auth::id(),
-            'min_supply_quantity' => $row[7],
-        ]);
     }
 }

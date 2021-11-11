@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\ProductsImport;
+use App\Imports\ProductsImportUpdate;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 

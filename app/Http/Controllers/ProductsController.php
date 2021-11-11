@@ -55,6 +55,7 @@ class ProductsController extends Controller
             'name' => 'required',
             'quantity_stock' => 'required',
             'description' => 'required',
+            'importance' => 'required',
 
         ]);
 
@@ -116,6 +117,6 @@ class ProductsController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('products.index');
+        return redirect()->back();
     }
 }

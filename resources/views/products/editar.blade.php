@@ -63,9 +63,19 @@
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
-                                        <label for="due_date">Fecha Vencimiento</label>
-                                        <input type="date" name="due_date" class="form-control"
-                                            value="{{ $product->due_date }}">
+                                        <label for="min_supply_quantity">Cantidad Minima Reabastecimiento</label>
+                                        <input type="number" name="min_supply_quantity" class="form-control"
+                                            value="{{ $product->min_supply_quantity }}">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <label for="importance">Importancia</label>
+                                        <select name="importance" class="form-control" required>
+                                            <option value="Muy Importante"@if($product->importance === 'Muy importante') selected @endif>Muy Importante</option>
+                                            <option value="Medianamente Importante"@if($product->importance === 'Medianamente Importante') selected @endif>Medianamente Importante</option>
+                                            <option value="Poco Importante"@if($product->importance === 'Poco Importante') selected @endif>Poco Importante</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6">
@@ -80,9 +90,9 @@
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
-                                        <label for="min_supply_quantity">Cantidad Minima Reabastecimiento</label>
-                                        <input type="number" name="min_supply_quantity" class="form-control"
-                                            value="{{ $product->min_supply_quantity }}">
+                                        <label for="due_date">Fecha Vencimiento</label>
+                                        <input type="date" name="due_date" class="form-control"
+                                            value="{{ $product->due_date }}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">

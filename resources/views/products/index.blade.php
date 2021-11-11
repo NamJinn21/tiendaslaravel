@@ -30,6 +30,7 @@
                                 <th style="color:#fff;">Descripción</th>
                                 <th style="display: none;">Id Usuario</th>
                                 <th style="color:#fff;">Categoría</th>
+                                <th style="color:#fff;">Importancia</th>
                                 <th style="color:#fff;">Cantidad Stock</th>
                                 <th style="color:#fff;">Cantidad Inventario</th>
                                 <th style="color:#fff;">Fecha de vencimiento</th>
@@ -46,6 +47,7 @@
                                     <td>{{ $product->description }}</td>
                                     <td style="display: none;">{{ $product->id_user }}</td>
                                     <td>{{ $product->joincategory }}</td>
+                                    <td>{{ $product->importance }}</td>
                                     <td>{{ $product->quantity_stock }}</td>
                                     <td>{{ $product->quantity_inventory }}</td>
                                     <td>{{ $product->due_date }}</td>

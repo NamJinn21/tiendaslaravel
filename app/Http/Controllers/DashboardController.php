@@ -30,14 +30,29 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-       
+    {   
+
+        // $products = Product::select('products.*','notifications.data->id','notifications.data->type')
+        // ->leftJoin('notifications', 'products.id', '=', 'notifications.data->id')
+        // ->whereRaw('quantity_stock  + quantity_inventory <= min_supply_quantity')
+        // ->where('notifications.data->type','!=','stock')
+        // ->addSelect(DB::raw("'stock' as type"))
+        // ->get();
+
+        // foreach($products as $pro){
+        //     echo($pro->id);
+        //     echo(',');
+        // }
+
+
+        $date = now()->addDays(30);
+        $productosxvencer = Product::where('due_date','<', $date); 
         $produxcatego = Product::selectRaw('products.category, categories.id, categories.name, COUNT(products.category) AS countproxcate')->leftjoin('categories', 'products.category', '=', 'categories.id')->groupby('products.category')->get();
         $categories = Category::all();
         $products = Product::all();
         $user = User::all();
-        return view('dash.index', compact('categories', 'products', 'user', 'produxcatego'));
-    }
+        return view('dash.index', compact('categories', 'products', 'user', 'produxcatego','productosxvencer'));
+     }
 
     /**
      * Show the form for creating a new resource.

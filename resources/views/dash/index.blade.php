@@ -63,9 +63,9 @@
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>65</h3>
+                        <h3>{{$productosxvencer->count();}}</h3>
 
-                        <p>Unique Visitors</p>
+                        <p>Productos a menos de 30 días de vencer</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-fw fa-users"></i>
@@ -76,17 +76,120 @@
             <!-- ./col -->
             <div class="col-lg-6 col-12">
                 <!-- small box -->
-                <div class="small-box bg-white">
-                    <div class="chart-container" style="height: 25vw">
-                        <canvas id="myChart"></canvas>
+                <div class="small-box bg-white" style="height: 25vw; padding: 40px 15px;">
+                    <div class="info-box">
+                        @php
+                            if($products->count() > 0){
+                                $porcentmuyimportantes = ($products->where('importance','Muy Importante')->count() / $products->count())*100;
+                            }else{
+                                $porcentmuyimportantes = 0;
+                            }
+                            
+                        @endphp
+                        @if ($porcentmuyimportantes < 15 || $porcentmuyimportantes > 25)
+                            <span class="info-box-icon bg-warning"><i class="far fa-arrow-alt-circle-up"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text" style="color: tomato;">Productos Muy Importantes - No corresponde al porcentaje establecido</span>
+                                <span class="info-box-number">{{$products->where('importance','Muy Importante')->count();}}</span>
+                                <div class="progress">
+                                    <div class="progress-bar bg-danger" style="width: {{$porcentmuyimportantes}}%;"></div>
+                                </div>
+                                <span class="progress-description" style="color: tomato;">
+                                    {{round($porcentmuyimportantes,2)}}% del inventario.
+                                </span>
+                            </div>
+                        @else
+                            <span class="info-box-icon bg-success"><i class="far fa-arrow-alt-circle-up"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Productos Muy Importantes</span>
+                                <span class="info-box-number">{{$products->where('importance','Muy Importante')->count();}}</span>
+                                <div class="progress">
+                                    <div class="progress-bar bg-info" style="width: {{$porcentmuyimportantes}}%"></div>
+                                </div>
+                                <span class="progress-description">
+                                    {{$porcentmuyimportantes}}% del inventario.
+                                </span>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="info-box">
+                        @php
+                            if($products->count() > 0){
+                                $porcentmedioimportantes = ($products->where('importance','Medianamente Importante')->count() / $products->count())*100;
+                            }else{
+                                $porcentmedioimportantes = 0;
+                            }
+                            
+                        @endphp
+                        @if ($porcentmedioimportantes < 25 || $porcentmedioimportantes > 30)
+                        <span class="info-box-icon bg-warning"><i class="far fa-arrow-alt-circle-right"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text" style="color: tomato;">Productos Medianamente Importantes - No corresponde al porcentaje establecido</span>
+                            <span class="info-box-number">{{$products->where('importance','Medianamente Importante')->count();}}</span>
+                            <div class="progress">
+                                <div class="progress-bar bg-danger" style="width: {{$porcentmedioimportantes}}%"></div>
+                            </div>
+                            <span class="progress-description" style="color: tomato;">
+                                {{round($porcentmedioimportantes,2)}}% del inventario.
+                            </span>
+                        </div>
+                        @else
+                            <span class="info-box-icon bg-success"><i class="far fa-arrow-alt-circle-right"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Productos Medianamente Importantes</span>
+                                <span class="info-box-number">{{$products->where('importance','Medianamente Importante')->count();}}</span>
+                                <div class="progress">
+                                    <div class="progress-bar bg-info" style="width: {{$porcentmedioimportantes}}%"></div>
+                                </div>
+                                <span class="progress-description">
+                                    {{$porcentmedioimportantes}}% del inventario.
+                                </span>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="info-box">
+                        @php
+                            if($products->count() > 0){
+                                $porcentpocoimportantes = ($products->where('importance','Poco Importante')->count() / $products->count())*100;
+                            }else{
+                                $porcentpocoimportantes = 0;
+                            }
+                            
+                        @endphp
+                        @if ($porcentpocoimportantes < 45 || $porcentpocoimportantes > 55)
+                            <span class="info-box-icon bg-warning"><i class="far fa-arrow-alt-circle-down"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text" style="color: tomato;">Productos Poco Importantes - No corresponde al porcentaje establecido</span>
+                                <span class="info-box-number">{{$products->where('importance','Poco Importante')->count();}}</span>
+                                <div class="progress">
+                                    <div class="progress-bar bg-danger" style="width: {{$porcentpocoimportantes}}%;"></div>
+                                </div>
+                                <span class="progress-description" style="color: tomato;">
+                                    {{round($porcentpocoimportantes,2)}}% del inventario.
+                                </span>
+                            </div>
+                        @else
+                            <span class="info-box-icon bg-success"><i class="far fa-arrow-alt-circle-down"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Productos Poco Importantes</span>
+                                <span class="info-box-number">{{$products->where('importance','Poco Importante')->count();}}</span>
+                                <div class="progress">
+                                    <div class="progress-bar bg-info" style="width: {{$porcentpocoimportantes}}%"></div>
+                                </div>
+                                <span class="progress-description">
+                                    {{$porcentpocoimportantes}}% del inventario.
+                                </span>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
             <div class="col-lg-6 col-12">
                 <!-- small box -->
-                <div class="small-box bg-white">
-                    <div class="chart-container" style="height: 25vw">
-                        <canvas id="BarChart"></canvas>
+                <div class="small-box bg-white" style="height: 25vw">
+                    <span class="d-flex justify-content-center"><h3>Productos x Categorías</h3></span>
+                    <div class="chart-container"  style="height: 21vw">
+                        <canvas id="myChart"></canvas>
                     </div>
                 </div>
             </div>

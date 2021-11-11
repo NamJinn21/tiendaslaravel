@@ -10,5 +10,5 @@ class Product extends Model
 {
     use HasFactory;
     use Notifiable;
-    protected $fillable = ['code','name','quantity_stock','quantity_inventory','due_date','category','description','id_user','min_supply_quantity'];
+    protected $fillable = ['code','name','quantity_stock','quantity_inventory','due_date','category','importance','description','id_user','min_supply_quantity'];
 }
