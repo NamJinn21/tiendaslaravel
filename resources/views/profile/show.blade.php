@@ -8,7 +8,7 @@
     <div>
         
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-            <a href="{{ route('dash')}}" class="fas fa-arrow-left fa-2x">volver</a>
+            <a href="{{ url('dash')}}" class="fas fa-arrow-left fa-2x">volver</a>
             <h1>ㅤ</h1>
             
             @if (Laravel\Fortify\Features::canUpdateProfileInformation())

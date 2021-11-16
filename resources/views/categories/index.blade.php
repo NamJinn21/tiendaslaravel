@@ -17,7 +17,7 @@
                     <div class="card-body">
 
 
-                        @can('crear-producto')
+                        @can('crear-categoria')
                         <a style="margin:0px 0px 10px 0px" class="btn btn-warning" href="{{ route('categories.create') }}">Nuevo</a>
                         @endcan
 
@@ -38,7 +38,7 @@
                                         @else
                                         <form class="formEliminar"
                                             action="{{ route('categories.destroy',$category->id) }}" method="POST">
-                                            @can('editar-producto')
+                                            @can('editar-categoria')
                                             <a class="btn btn-info"
                                                 href="{{ route('categories.edit',$category->id) }}">Editar <i
                                                     class="fas fa-edit"></i></a>
@@ -46,7 +46,7 @@
 
                                             @csrf
                                             @method('DELETE')
-                                            @can('borrar-producto')
+                                            @can('borrar-categoria')
                                             <button type="submit" class="btn btn-danger">Borrar <i
                                                     class="fas fa-trash-alt "></i></button>
                                             @endcan

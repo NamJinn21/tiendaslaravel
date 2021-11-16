@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'use_ico_only' => false,
+    'use_ico_only' => true,
     'use_full_favicon' => false,
 
     /*
@@ -265,6 +265,7 @@ return [
             'text' => 'Categorías',
             'url'  => 'categories',
             'icon' => 'fas fa-fw fas fa-list',
+            'can' => 'ver-categoria',
         ],
         ['header' => 'CONFIGURACIÓN DE USUARIOS'],
         [

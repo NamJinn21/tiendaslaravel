@@ -24,14 +24,10 @@ use Illuminate\Support\Facades\Auth;
 //validando auth
 Route::get('/', function () {
     if (Auth::check()) {
-        return redirect('/dash');
+        return redirect('dash');
     }
     return view('auth.login');
 });
-//controlador del dash
-Route::get('dash', [DashboardController::class, 'index'])
-    ->name('dash');
-
 //marcar todas las notificaciones como leídas directamente
 Route::get('markAsRead', function(){
     auth()->user()->unreadNotifications->markAsRead();
@@ -46,6 +42,7 @@ Route::get('notifications/show', [NotificationsController::class, 'index'])
 
 //grupo de rutas principales
 Route::group(['middleware' => ['auth']], function () {
+    Route::resource('dash', DashboardController::class);
     Route::resource('roles', RolController::class);
     Route::resource('usuarios', UsuarioController::class);
     Route::resource('products', ProductsController::class);

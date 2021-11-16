@@ -61,7 +61,7 @@ class DashboardController extends Controller
      */
     public function create()
     {
-        return view('categories.crear');
+        
     }
 
     /**
@@ -72,11 +72,7 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
-            'name' => 'required',
-        ]);
-        Category::create($request->all());
-        return redirect()->route('categories.index');
+        
     }
 
     /**
@@ -98,7 +94,7 @@ class DashboardController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('categories.editar', compact('category'));
+       
     }
 
     /**
@@ -110,13 +106,7 @@ class DashboardController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        request()->validate([
-            'name' => 'required',
-            //'description' => 'required'
-        ]);
-
-        $category->update($request->all());
-        return redirect()->route('categories.index');
+        
     }
 
     /**
@@ -127,7 +117,6 @@ class DashboardController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
-        return redirect()->route('categories.index');
+        
     }
 }
